@@ -1,427 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<title>2026新生兒補助懶人包</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
-<style>
-  :root{
-    --bg:#F5F6F3;
-    --surface:#FFFFFF;
-    --surface-2:#EDF0EC;
-    --ink:#16241F;
-    --ink-muted:#4C5A54;
-    --ink-faint:#7C8A83;
-    --border:#DCE2DD;
-    --primary:#0F5C52;
-    --primary-soft:#E3EFEA;
-    --accent:#C1592B;
-    --accent-soft:#F6E3D6;
-    --c-central:#6B4FA0;
-    --c-central-soft:#EBE5F5;
-    --c-taipei:#0F5C52;
-    --c-taipei-soft:#E3EFEA;
-    --c-ntpc:#1D5B8A;
-    --c-ntpc-soft:#E1EBF2;
-    --c-other:#94661F;
-    --c-other-soft:#F3E8D4;
-    --shadow: 0 1px 2px rgba(22,36,31,0.06), 0 6px 20px rgba(22,36,31,0.05);
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#12171A;
-      --surface:#1B2126;
-      --surface-2:#212A29;
-      --ink:#EDEFEA;
-      --ink-muted:#A9B7B0;
-      --ink-faint:#7C8B84;
-      --border:#2E3A37;
-      --primary:#59C4AC;
-      --primary-soft:#183430;
-      --accent:#E9975F;
-      --accent-soft:#3A2718;
-      --c-central:#BBA0E6;
-      --c-central-soft:#2A2440;
-      --c-taipei:#59C4AC;
-      --c-taipei-soft:#183430;
-      --c-ntpc:#84BBEA;
-      --c-ntpc-soft:#152A38;
-      --c-other:#DDB56C;
-      --c-other-soft:#332715;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#12171A;
-    --surface:#1B2126;
-    --surface-2:#212A29;
-    --ink:#EDEFEA;
-    --ink-muted:#A9B7B0;
-    --ink-faint:#7C8B84;
-    --border:#2E3A37;
-    --primary:#59C4AC;
-    --primary-soft:#183430;
-    --accent:#E9975F;
-    --accent-soft:#3A2718;
-    --c-central:#BBA0E6;
-    --c-central-soft:#2A2440;
-    --c-taipei:#59C4AC;
-    --c-taipei-soft:#183430;
-    --c-ntpc:#84BBEA;
-    --c-ntpc-soft:#152A38;
-    --c-other:#DDB56C;
-    --c-other-soft:#332715;
-    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
-  }
-
-  *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-    line-height:1.7;
-    -webkit-font-smoothing:antialiased;
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
-  }
-  a{color:var(--primary);}
-  h1,h2,h3{
-    font-family:"Noto Serif TC",serif;
-    text-wrap:balance;
-    color:var(--ink);
-    margin:0;
-  }
-  .mono{font-family:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace; font-variant-numeric:tabular-nums;}
-
-  .wrap{max-width:880px; margin:0 auto; padding:0 20px 80px;}
-
-  header.hero{ padding:56px 20px 28px; max-width:880px; margin:0 auto; }
-  .eyebrow{
-    font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:0.14em;
-    text-transform:uppercase; color:var(--primary); display:flex; align-items:center; gap:10px;
-  }
-  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--primary); display:inline-block; }
-  h1.title{ font-size:clamp(30px,5vw,42px); font-weight:700; margin-top:14px; letter-spacing:-0.01em; }
-  .subtitle{ color:var(--ink-muted); font-size:16px; margin-top:12px; max-width:62ch; }
-  .meta-row{ margin-top:20px; display:flex; flex-wrap:wrap; gap:8px; }
-  .meta-pill{
-    font-family:"IBM Plex Mono",monospace; font-size:12px; padding:5px 10px; border-radius:100px;
-    border:1px solid var(--border); color:var(--ink-muted); background:var(--surface);
-  }
-
-  nav.quicknav{
-    position:sticky; top:0; z-index:20;
-    background:color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:10px 0;
-  }
-  nav.quicknav .inner{
-    max-width:880px; margin:0 auto; padding:0 20px; display:flex; gap:8px;
-    overflow-x:auto; scrollbar-width:none;
-  }
-  nav.quicknav .inner::-webkit-scrollbar{display:none;}
-  nav.quicknav a{
-    flex:none; text-decoration:none; font-size:13px; font-weight:600; color:var(--ink-muted);
-    background:var(--surface); border:1px solid var(--border); padding:7px 13px; border-radius:100px; white-space:nowrap;
-  }
-  nav.quicknav a:hover{ color:var(--ink); border-color:var(--ink-faint); }
-
-  .summary-strip{
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
-    background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin:32px 0 8px;
-  }
-  .stat-tile{ background:var(--surface); padding:20px 18px; display:flex; flex-direction:column; gap:8px; }
-  .stat-tag{ display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; color:var(--ink-muted); letter-spacing:0.02em; }
-  .dot{width:7px; height:7px; border-radius:50%; flex:none;}
-  .stat-num{ font-family:"IBM Plex Mono",monospace; font-size:23px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
-  .stat-num small{font-size:12.5px; font-weight:500; color:var(--ink-muted); font-family:"Noto Sans TC",sans-serif;}
-  .stat-desc{font-size:12px; color:var(--ink-faint); line-height:1.5;}
-
-  section{ padding-top:56px; scroll-margin-top:64px; }
-  .section-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
-  .tag{
-    font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; letter-spacing:0.06em;
-    padding:3px 9px; border-radius:5px;
-  }
-  .tag.central{ background:var(--c-central-soft); color:var(--c-central); }
-  .tag.taipei{ background:var(--c-taipei-soft); color:var(--c-taipei); }
-  .tag.ntpc{ background:var(--c-ntpc-soft); color:var(--c-ntpc); }
-  .tag.other{ background:var(--c-other-soft); color:var(--c-other); }
-
-  h2.section-title{ font-size:26px; font-weight:700; }
-  .section-lede{ color:var(--ink-muted); margin-top:10px; max-width:64ch; font-size:15px;}
-
-  /* timeline rail */
-  .rail{ position:relative; margin-top:30px; padding-left:30px; }
-  .rail::before{ content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--border); }
-  .rail-item{ position:relative; padding-bottom:34px; }
-  .rail-item:last-child{ padding-bottom:0; }
-  .rail-item::before{
-    content:""; position:absolute; left:-30px; top:3px; width:13px; height:13px; border-radius:50%;
-    background:var(--surface); border:2.5px solid var(--primary);
-  }
-  .rail-when{
-    font-family:"IBM Plex Mono",monospace; color:var(--primary); font-weight:600; font-size:12.5px;
-    letter-spacing:0.03em; text-transform:uppercase; margin-bottom:10px;
-  }
-
-  /* cards */
-  .card{
-    background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cat, var(--primary));
-    border-radius:10px; padding:20px 22px; box-shadow:var(--shadow);
-  }
-  .card + .card{ margin-top:14px; }
-  .card.central{ --cat:var(--c-central); }
-  .card.taipei{ --cat:var(--c-taipei); }
-  .card.ntpc{ --cat:var(--c-ntpc); }
-  .card.other{ --cat:var(--c-other); }
-
-  .card h3{ font-size:18px; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
-  .amount{ font-family:"IBM Plex Mono",monospace; color:var(--accent); font-weight:600; }
-  .card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px 20px; margin-top:14px; }
-  .field-label{
-    font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-faint);
-    font-family:"IBM Plex Mono",monospace;
-  }
-  .field-value{ font-size:14.5px; margin-top:3px; }
-  .card p{ margin:12px 0 0; font-size:14.5px; color:var(--ink-muted); }
-  .card .note{
-    margin-top:12px; font-size:13px; color:var(--ink-faint); border-top:1px dashed var(--border); padding-top:10px;
-  }
-  .link-row{ margin-top:14px; display:flex; flex-wrap:wrap; gap:10px 18px; }
-  .link-row a{ font-size:13.5px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:5px; }
-  .link-row a::after{ content:"→"; transition:transform .15s; }
-  .link-row a:hover::after{ transform:translateX(2px); }
-
-  .table-wrap{ overflow-x:auto; margin-top:16px; border:1px solid var(--border); border-radius:10px; }
-  table{ border-collapse:collapse; width:100%; min-width:460px; font-size:14px; background:var(--surface);}
-  thead th{
-    text-align:left; background:var(--surface-2); color:var(--ink-muted); font-weight:600; font-size:12.5px;
-    letter-spacing:0.02em; padding:11px 14px; border-bottom:1px solid var(--border); white-space:nowrap;
-  }
-  tbody td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
-  tbody tr:last-child td{ border-bottom:none; }
-  td.num{ font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600; white-space:nowrap;}
-  td.hi{ background:var(--primary-soft); }
-  .table-caption{ font-size:12.5px; color:var(--ink-faint); margin-top:8px; }
-
-  .dir-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:18px; }
-  .dir-card{ background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
-  .dir-card .dir-cat{
-    font-size:11px; font-family:"IBM Plex Mono",monospace; letter-spacing:0.05em;
-    text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px;
-  }
-  .dir-card h4{ margin:0 0 8px; font-size:15px; font-family:"Noto Sans TC",sans-serif; font-weight:700;}
-  .dir-card ul{ margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px;}
-  .dir-card a{ font-size:13.5px; text-decoration:none; }
-  .dir-card a:hover{ text-decoration:underline; }
-  .dir-card .phone{ font-size:13px; color:var(--ink-muted); font-family:"IBM Plex Mono",monospace;}
-
-  .callout{
-    margin-top:18px; padding:16px 18px; background:var(--surface-2); border:1px solid var(--border);
-    border-radius:10px; font-size:13.5px; color:var(--ink-muted);
-  }
-  .callout strong{ color:var(--ink); }
-  .callout.warn{ border-color:var(--accent); background:var(--accent-soft); }
-
-  footer{
-    margin-top:70px; padding-top:28px; border-top:1px solid var(--border);
-    color:var(--ink-faint); font-size:12.5px; line-height:1.8;
-  }
-  footer a{ color:var(--ink-muted); }
-
-  hr.div{ border:none; border-top:1px solid var(--border); margin:56px 0 0; }
-
-  /* mobile tuning */
-  @media (max-width:640px){
-    header.hero{ padding:36px 16px 20px; }
-    .subtitle{ font-size:14.5px; }
-    .meta-pill{ font-size:11px; }
-    .wrap{ padding:0 14px 64px; }
-    section{ padding-top:38px; }
-    hr.div{ margin:38px 0 0; }
-    h2.section-title{ font-size:21px; }
-    .section-lede{ font-size:13.5px; }
-
-    nav.quicknav .inner{ padding:0 14px; }
-    nav.quicknav a{ font-size:12.5px; padding:8px 12px; }
-
-    .summary-strip{ grid-template-columns:repeat(2,1fr); margin:22px 0 6px; }
-    .stat-tile{ padding:14px 12px; gap:6px; }
-    .stat-num{ font-size:19px; }
-    .stat-desc{ font-size:11px; }
-
-    .rail{ padding-left:20px; margin-top:22px; }
-    .rail::before{ left:4px; }
-    .rail-item{ padding-bottom:26px; }
-    .rail-item::before{ left:-20px; width:11px; height:11px; }
-    .rail-when{ font-size:11.5px; margin-bottom:8px; }
-
-    .card{ padding:15px 14px; border-radius:9px; }
-    .card + .card{ margin-top:11px; }
-    .card h3{ font-size:16px; gap:6px; }
-    .card p{ font-size:13.5px; }
-    .card-grid{ grid-template-columns:1fr; gap:10px; margin-top:12px; }
-    .card-grid + .card-grid{ margin-top:10px; }
-
-    .table-wrap{ margin-top:12px; border-radius:8px; -webkit-overflow-scrolling:touch; }
-    .table-wrap::before{
-      content:"左右滑動可看完整表格";
-      display:block; font-size:11px; color:var(--ink-faint);
-      padding:6px 12px; background:var(--surface-2); border-bottom:1px solid var(--border);
-    }
-    table{ min-width:420px; font-size:12.5px; }
-    thead th{ padding:9px 11px; font-size:11.5px; }
-    tbody td{ padding:9px 11px; }
-
-    .link-row{ gap:8px 14px; margin-top:12px; }
-    .link-row a{ font-size:13px; }
-
-    .dir-grid{ grid-template-columns:1fr; gap:10px; }
-    .dir-card{ padding:14px 15px; }
-
-    .callout{ padding:13px 14px; font-size:13px; }
-    footer{ margin-top:48px; font-size:12px; }
-  }
-</style>
-</head>
-<body>
-
-<header class="hero">
-  <div class="eyebrow">NEWBORN BENEFITS GUIDE · 2026</div>
-  <h1 class="title">2026新生兒補助懶人包</h1>
-  <p class="subtitle">以新北市＋中央政府為主軸，只列「新生兒一定申請得到、確定會撥款」的項目，按照從出生當天到報稅季的時間順序整理；台北市對應版本與有條件／尚未上路的加碼放在後段供對照。</p>
-  <div class="meta-row">
-    <span class="meta-pill">資料整理日期 2026.08.25</span>
-    <span class="meta-pill">主要對象：設籍新北市之2026年出生新生兒</span>
-    <span class="meta-pill">僅收錄不排富、非特殊身分即可申請的項目</span>
-  </div>
-</header>
-
-<nav class="quicknav">
-  <div class="inner">
-    <a href="#summary">5秒看懂</a>
-    <a href="#timeline">保證領到時間軸</a>
-    <a href="#taipei">台北市對照</a>
-    <a href="#conditional">有條件／尚未上路</a>
-    <a href="#directory">官方網站彙整</a>
-  </div>
-</nav>
-
-<div class="wrap">
-
-  <section id="summary">
-    <div class="section-head">
-      <h2 class="section-title">5秒看懂：新北市家庭確定領得到的錢</h2>
-    </div>
-    <p class="section-lede">以下皆為不排富、不限特殊身分，只要完成申請就會撥款的項目（第一胎、一般家庭金額）。</p>
-    <div class="summary-strip">
-      <div class="stat-tile">
-        <div class="stat-tag"><span class="dot" style="background:var(--c-ntpc)"></span>新北市・生育獎勵金</div>
-        <div class="stat-num">4<small>萬元／一次性</small></div>
-        <div class="stat-desc">115年出生第一胎，與中央10萬可疊加</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tag"><span class="dot" style="background:var(--c-central)"></span>中央・生育給付保底</div>
-        <div class="stat-num">10<small>萬元／一次性</small></div>
-        <div class="stat-desc">勞保／國保／農保／公保／未參保皆保底領到</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tag"><span class="dot" style="background:var(--c-central)"></span>育兒津貼／托育補助</div>
-        <div class="stat-num">5,000<small>元／月起</small></div>
-        <div class="stat-desc">0～2歲擇一請領，送托最高13,000元起</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tag"><span class="dot" style="background:var(--c-central)"></span>育嬰留職停薪津貼</div>
-        <div class="stat-num">80<small>%薪資</small></div>
-        <div class="stat-desc">受僱父母各自最長6個月，合計最多12個月</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tag"><span class="dot" style="background:var(--c-central)"></span>幼兒學前扣除額</div>
-        <div class="stat-num">15<small>萬元／年起</small></div>
-        <div class="stat-desc">報稅用，第二名以上每人22.5萬元</div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <section id="timeline">
-    <div class="section-head">
-      <span class="tag ntpc">新北市＋中央</span>
-      <h2 class="section-title">保證領到時間軸</h2>
-    </div>
-    <p class="section-lede">從出生登記當天排到隔年報稅季，每個節點都是不排富、只要符合基本身分就一定拿得到的補助。</p>
-
-    <div class="rail">
-
-      <div class="rail-item">
-        <div class="rail-when">STEP 1 · 出生登記當天</div>
-        <div class="card ntpc">
-          <h3><span class="tag central">中央</span><span class="tag ntpc">新北市</span>生育給付保底10萬＋新北市生育獎勵金<span class="amount">最高約14萬起</span></h3>
-          <p>到新北市各戶政事務所辦出生登記時，可以「戶政一站式」同時申請中央生育給付與新北市生育獎勵金，一趟辦完兩筆錢。中央生育給付不論加保身分，合計保底10萬元；原始給付較低者由政府補足差額。</p>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>身分別</th><th>資格條件</th><th>原始給付計算</th></tr></thead>
-              <tbody>
-                <tr><td>勞保</td><td>生產前已加保滿280日（早產滿181日）</td><td class="num">前6個月平均月投保薪資 × 2個月</td></tr>
-                <tr><td>國民年金</td><td>保險有效期間分娩，或退保後1年內分娩</td><td class="num">月投保金額 × 2個月</td></tr>
-                <tr><td>農保</td><td>加保滿280日分娩（早產181日）</td><td class="num">當月投保金額 × 3個月</td></tr>
+          <tr><td>農保</td><td>加保滿280日分娩（早產181日）</td><td class="num">當月投保金額 × 3個月</td></tr>
                 <tr><td>公教保</td><td>繳費滿280日分娩（早產181日）</td><td class="num">往前推6個月保險俸額 × 2個月</td></tr>
                 <tr><td>未參加任何社會保險</td><td>2026年1月1日後分娩之本國籍或與國人結婚之外籍女性</td><td class="num">直接領10萬元</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>新北市生育獎勵金・胎次</th><th>115年（2026）出生金額</th></tr></thead>
-              <tbody>
-                <tr><td>第1胎</td><td class="num hi">40,000元</td></tr>
-                <tr><td>第2胎</td><td class="num hi">45,000元</td></tr>
-                <tr><td>第3胎（含）以上</td><td class="num hi">50,000元</td></tr>
-              </tbody>
-            </table>
-          </div>
           <div class="card-grid">
-            <div><div class="field-label">新北設籍條件</div><div class="field-value">母或父設籍新北市滿10個月（可併計基北北桃），或出生後累計設籍滿10個月</div></div>
-            <div><div class="field-label">審核時間</div><div class="field-value">中央約10個工作日核付；新北市約9天</div></div>
+            <div><div class="field-label">申請方式</div><div class="field-value">出生登記時「戶政一站式」通報最快，或勞保局e化服務系統線上申請</div></div>
+            <div><div class="field-label">審核時間</div><div class="field-value">收件後約10個工作日核付，再3～5個工作日入帳</div></div>
           </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>項目</th><th>申請方式</th><th>應備文件</th></tr></thead>
-              <tbody>
-                <tr><td>新北市生育獎勵金</td><td>臨櫃：各戶政事務所辦出生登記時一併申辦<br>線上：baby.ntpc.gov.tw</td><td>親自辦理：國民身分證、存摺影本<br>委託辦理：另加受託人身分證、委託書</td></tr>
-                <tr><td>中央生育給付10萬</td><td>戶政一站式（同一趟辦好）或勞保局e化服務系統線上申請</td><td>身分證明文件、新生兒與申請人關係證明（戶口名簿或出生證明）、申請人金融機構存摺影本；依勞保／國保／農保／公保／未參保身分別，實際清單略有差異，可洽1955勞工諮詢申訴專線或勞保局確認</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="note">⚠ 資金來源提醒：中央這10萬元的「補足差額」部分，是2026年度中央政府總預算卡關後，由行政院以「動支新興計畫」方式先行墊付，第一批已於2026年母親節前入帳。制度已經在實際運作，但財源不是走完整正常預算程序，建議送件後主動追蹤入帳進度。</div>
+          <div class="note">⚠ 資金來源提醒：這10萬元的「補足差額」部分，是2026年度中央政府總預算卡關後，由行政院以「動支新興計畫」方式先行墊付，第一批已於2026年母親節前入帳。制度已經在實際運作，但財源不是走完整正常預算程序，建議送件後主動追蹤入帳進度。</div>
+          <div class="note" style="border-top:none;padding-top:0;">你戶籍所在縣市通常還會另外發一筆生育獎勵金，可以跟這筆10萬同時領、同一趟辦好，金額與期限因縣市差很多（有的60天內、有的1年內），請到上方選單查你的縣市。</div>
           <div class="link-row">
             <a href="https://edesk.bli.gov.tw/me/#/home" target="_blank" rel="noopener">勞保局e化服務系統</a>
-            <a href="https://baby.ntpc.gov.tw" target="_blank" rel="noopener">新北市線上申辦</a>
+            <a href="https://www.bli.gov.tw/0004836.html" target="_blank" rel="noopener">勞保生育給付說明</a>
           </div>
         </div>
       </div>
 
       <div class="rail-item">
-        <div class="rail-when">STEP 2 · 出生後1年內（期限）</div>
-        <div class="card ntpc">
-          <h3><span class="tag ntpc">新北市</span>生育獎勵金申請截止日</h3>
-          <p>若出生登記當天沒有一起辦，新北市生育獎勵金最晚要在寶寶出生後1年內提出申請，逾期不再受理，未婚生育或依法收養者也適用同一期限。</p>
-          <div class="link-row">
-            <a href="https://welfare.ntpc.gov.tw/viewService/show/1008103" target="_blank" rel="noopener">新北市生育獎勵金說明頁</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="rail-item">
-        <div class="rail-when">STEP 3 · 0～2歲期間・每月</div>
+        <div class="rail-when">STEP 2 · 0～2歲期間・每月</div>
         <div class="card central">
-          <h3><span class="tag central">中央</span><span class="tag ntpc">新北市</span>育兒津貼／托育補助＋新北市送托加碼</h3>
-          <p>未送托領「育兒津貼」，送托合作保母／托嬰中心則改領較高的「托育補助」，兩者擇一、不能併領，已取消所得排富限制。新北市另外在托育補助上加碼。</p>
+          <h3><span class="tag central">中央</span>育兒津貼／托育補助（擇一請領）</h3>
+          <p>未送托領「育兒津貼」，送托合作保母／托嬰中心則改領較高的「托育補助」，兩者擇一、不能併領，已取消所得排富限制。</p>
           <div class="table-wrap">
             <table>
               <thead><tr><th>一般家庭・胎次</th><th>育兒津貼（月）</th><th>公共托育（月）</th><th>準公共托育（月）</th></tr></thead>
@@ -432,15 +32,11 @@
               </tbody>
             </table>
           </div>
-          <p><strong style="color:var(--ink)">新北市加碼：</strong>送托準公共合作保母加發2,000元／月；送托私立托嬰中心（含準公共）加發3,000元／月，疊加在上表之上。</p>
           <div class="card-grid">
             <div><div class="field-label">申請資格</div><div class="field-value">幼兒0～未滿2歲，完成出生登記或戶籍登記</div></div>
             <div><div class="field-label">送托條件</div><div class="field-value">托育補助須送托合作機構、每週達30小時以上</div></div>
           </div>
-          <div class="card-grid">
-            <div><div class="field-label">申請方式</div><div class="field-value">線上：twbaby.sfaa.gov.tw；或紙本親送／郵寄兒童戶籍地區公所社會課</div></div>
-            <div><div class="field-label">應備文件</div><div class="field-value">申請表、申請人與幼兒身分證明文件影本、申請人金融機構帳戶影本；送托者另附托育契約影本</div></div>
-          </div>
+          <div class="note">不少縣市會在這張表之上再加碼每月幾百到幾千元（有的加在自帶育兒津貼、有的加在送托補助），詳見上方選單裡你縣市的加碼說明。</div>
           <div class="link-row">
             <a href="https://twbaby.sfaa.gov.tw" target="_blank" rel="noopener">育兒津貼線上申辦</a>
           </div>
@@ -448,15 +44,15 @@
       </div>
 
       <div class="rail-item">
-        <div class="rail-when">STEP 4 · 父母申請留職停薪時（任一方，可選）</div>
+        <div class="rail-when">STEP 3 · 父母申請留職停薪時（任一方，可選）</div>
         <div class="card central">
           <h3><span class="tag central">中央</span>育嬰留職停薪津貼<span class="amount">月投保薪資80%</span></h3>
           <p>由勞保「育嬰留職停薪津貼」60%＋就業安定基金「薪資補助」20%合併發放、不須另外申請，兩者相加即為8成薪。這個80%比例自2021年7月起即已實施，不是2026年才新增的比例；受僱滿6個月、子女未滿3歲的父母皆可申請，各自最長6個月，合計最多12個月（可接力）。</p>
           <div class="card-grid">
             <div><div class="field-label">申請流程</div><div class="field-value">先向公司申請育嬰留停，再向勞保局申請津貼</div></div>
-            <div><div class="field-label">申請方式</div><div class="field-value">線上：edesk.bli.gov.tw（個人或投保單位皆可代辦）；或書面郵寄勞保局</div></div>
+            <div><div class="field-label">申請方式</div><div class="field-value">線上：edesk.bli.gov.tw；或書面郵寄勞保局</div></div>
           </div>
-          <div class="note">應備文件：育嬰留職停薪津貼申請書、給付收據及繼續投保申請書；育嬰留職停薪證明（載明起訖期間）；被保險人及子女戶口名簿影本或身分證明；被保險人本人金融機構存摺封面影本。收養未滿3歲兒童須另附試養契約或法院聲請狀等證明；已線上申辦者不需再補寄書面文件。</div>
+          <div class="note">應備文件：育嬰留職停薪津貼申請書、給付收據及繼續投保申請書；育嬰留職停薪證明（載明起訖期間）；被保險人及子女戶口名簿影本或身分證明；被保險人本人金融機構存摺封面影本。已線上申辦者不需再補寄書面文件。</div>
           <div class="link-row">
             <a href="https://edesk.bli.gov.tw/me/#/na/login" target="_blank" rel="noopener">勞保局線上申辦</a>
             <a href="https://www.bli.gov.tw/0015728.html" target="_blank" rel="noopener">請領手續說明</a>
@@ -465,7 +61,7 @@
       </div>
 
       <div class="rail-item">
-        <div class="rail-when">STEP 5 · 幼兒滿2歲時</div>
+        <div class="rail-when">STEP 4 · 幼兒滿2歲時</div>
         <div class="card central">
           <h3><span class="tag central">中央</span>銜接2～5歲育兒津貼（教育部）<span class="amount">5,000～7,000元／月</span></h3>
           <p>幼兒滿2歲、未就讀公共化幼兒園者，接續申請教育部育兒津貼，金額比照0～2歲級距，記得在原津貼到期前改向教育部系統申請，避免中斷。</p>
@@ -480,70 +76,15 @@
       </div>
 
       <div class="rail-item">
-        <div class="rail-when">STEP 6 · 每年5月報稅季</div>
+        <div class="rail-when">STEP 5 · 每年5月報稅季</div>
         <div class="card central">
           <h3><span class="tag central">中央</span>幼兒學前特別扣除額<span class="amount">15萬／22.5萬元</span></h3>
           <p>子女在申報年度1月1日尚未滿6歲，第一名子女扣除15萬元，第二名以上每人扣除22.5萬元，已無所得下限；但適用20%以上稅率、選擇股利28%單一稅率，或基本所得額超過670萬元者不得列報。子女未滿6歲期間每年都可以扣。</p>
-          <div class="note">申請方式：不用另外申請，每年5月報稅時在「綜合所得稅結算申報書」列報該子女為扶養親屬，系統或人工計算時即自動適用此扣除額；不需要額外檢附文件，但建議留存戶口名簿或戶籍謄本備查。</div>
+          <div class="note">申請方式：不用另外申請，每年5月報稅時在「綜合所得稅結算申報書」列報該子女為扶養親屬即自動適用，不需額外檢附文件，但建議留存戶口名簿或戶籍謄本備查。</div>
           <div class="link-row">
             <a href="https://www.mof.gov.tw/" target="_blank" rel="noopener">財政部說明頁</a>
           </div>
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <section id="taipei">
-    <div class="section-head">
-      <span class="tag taipei">台北市對照</span>
-      <h2 class="section-title">如果設籍台北市：對應版本</h2>
-    </div>
-    <p class="section-lede">中央的部分（保底10萬、育兒津貼／托育補助、育嬰留停、報稅扣除額）台北市家庭完全比照上方時間軸，差別只在地方加碼這幾項。</p>
-
-    <div class="card taipei">
-      <h3>生育獎勵金<span class="amount">4萬／4.5萬／5萬元</span></h3>
-      <p>2025年9月9日（含）以後出生之新生兒適用現行金額，與中央生育給付10萬可疊加。</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>胎次</th><th>金額</th></tr></thead>
-          <tbody>
-            <tr><td>第1胎</td><td class="num">40,000元</td></tr>
-            <tr><td>第2胎</td><td class="num">45,000元</td></tr>
-            <tr><td>第3胎（含）以上</td><td class="num">50,000元</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card-grid">
-        <div><div class="field-label">設籍條件</div><div class="field-value">父或母一方，自出生日（或預產期）前10個月起連續設籍台北市（可併計新北、基隆），申請時仍設籍台北市</div></div>
-        <div><div class="field-label">申請期限</div><div class="field-value">國內出生：出生次日起60日內；國外出生：1年內</div></div>
-      </div>
-      <div class="card-grid">
-        <div><div class="field-label">申請方式</div><div class="field-value">臺北市各區戶政事務所，辦出生登記時一併申辦</div></div>
-        <div><div class="field-label">應備文件</div><div class="field-value">親自辦理：申請人身分證明、印章或簽名、新生兒母親金融機構存摺影本<br>委託辦理：另加受託人身分證明、委託書</div></div>
-      </div>
-      <div class="note">注意：台北市的60日期限比新北市的1年期限緊，建議優先處理。</div>
-      <div class="link-row">
-        <a href="https://born.taipei/cp.aspx?n=4BB21D19B8E70CE0" target="_blank" rel="noopener">台北市助您好孕官網</a>
-      </div>
-    </div>
-
-    <div class="card taipei">
-      <h3>托育補助台北市加碼</h3>
-      <p>準公共托育每月加碼5,000元（第二胎再加2,000元）；送托社區公共托育家園加碼4,000元／月；公立托嬰中心加碼2,500元／月，疊加在中央托育補助之上。</p>
-    </div>
-
-    <div class="card taipei">
-      <h3>臺北市兒童醫療補助（第一類為普及式，不限身分）</h3>
-      <p>設籍台北市未滿6歲、父或母設籍並實際居住滿10個月的一般兒童即可申請（第一類），這點比新北市只限低收/中低收/罕病兒童的範圍更廣，屬於台北市較特別的普及式醫療補助。</p>
-      <div class="card-grid">
-        <div><div class="field-label">申請方式</div><div class="field-value">第一類、第二類：各區健康服務中心臨櫃申請<br>第三類（第3胎以上）：各區戶政事務所</div></div>
-        <div><div class="field-label">應備文件</div><div class="field-value">戶口名簿、戶籍謄本及相關身分證明文件；特殊個案（罕病、重大傷病、低收）需另附證明</div></div>
-      </div>
-      <div class="link-row">
-        <a href="https://born.taipei/cp.aspx?n=5B39C05FDAD35C72" target="_blank" rel="noopener">台北市兒童醫療補助說明</a>
       </div>
     </div>
   </section>
@@ -558,28 +99,13 @@
     <p class="section-lede">以下項目不是每個新生兒都能拿到，或現階段根本還無法申請，列出來給你參考，但不建議預先規劃這些錢的用途。</p>
 
     <div class="card other">
-      <h3>弱勢／中低收入戶育兒津貼與托育補助加成</h3>
-      <p>中低收入戶、低收入戶或特殊境遇家庭，托育補助最高可達每月17,000～19,000元，僅限符合資格家庭。</p>
+      <h3>各縣市低收／中低收兒童醫療補助與弱勢兒少生活扶助</h3>
+      <p>幾乎每個縣市都對低收入戶、中低收入戶、罕見疾病或重大傷病兒童另有醫療補助與生活扶助，金額與資格差異很大，多數縣市不是「一般家庭皆可領」，需符合福利身分才能申請。台北市的兒童醫療補助比較特別，第一類是「所有設籍未滿6歲兒童」皆可申請，不限低收/中低收，屬於少數普及式設計。實際資格請洽戶籍所在地社會局／處，或撥打下方1957專線協助確認。</p>
     </div>
 
     <div class="card other">
-      <h3>新北市醫療補助（限特定身分，非人人可領）</h3>
-      <p>新北市的兒童醫療補助以低收入戶、中低收入戶、罕見疾病或重大傷病兒童為主，一般家庭不適用，與台北市第一類的普及式設計不同。補助項目：門診掛號費上限150元、急診掛號費上限300元、健保部分負擔實報實銷、住院自付額每日上限1,000元（年度上限15,000元）。</p>
-      <div class="card-grid">
-        <div><div class="field-label">申請方式</div><div class="field-value">郵寄或臨櫃：新北市政府衛生局醫事管理科</div></div>
-        <div><div class="field-label">應備文件</div><div class="field-value">戶籍資料、身分證、低收/中低收/重大傷病等福利資格證明文件</div></div>
-      </div>
-      <div class="link-row">
-        <a href="https://welfare.ntpc.gov.tw/viewService/show/22183" target="_blank" rel="noopener">弱勢兒童及少年醫療補助</a>
-      </div>
-    </div>
-
-    <div class="card other">
-      <h3>特殊境遇家庭扶助</h3>
-      <p>單親、家暴受害、非自願失業等特殊境遇家庭，可另申請生活扶助、子女生活津貼、傷病醫療補助，台北市、新北市皆由社會局受理。</p>
-      <div class="link-row">
-        <a href="https://welfare.ntpc.gov.tw/viewService/show/22039" target="_blank" rel="noopener">新北市特殊境遇家庭扶助</a>
-      </div>
+      <h3>鄉鎮市公所加碼（縣府之外的另一層加碼）</h3>
+      <p>新竹縣、彰化縣、南投縣、雲林縣、嘉義縣、花蓮縣、宜蘭縣等縣的部分鄉鎮市公所，會在「縣政府」的生育獎勵金之上，再另外加碼一筆（例如宜蘭縣南澳鄉、花蓮縣吉安鄉、新竹縣寶山鄉等），金額由各鄉鎮市自治條例決定，差異可以到好幾萬元。這一層資訊變動快、不易統一彙整，上面的縣市選單只列到「縣市政府」層級，鄉鎮市加碼請直接洽戶籍所在地的鄉鎮市公所民政課確認。</p>
     </div>
 
     <div class="card other">
@@ -589,7 +115,7 @@
 
     <div class="card other">
       <h3>1957福利諮詢專線</h3>
-      <p>不確定自己家庭符合哪些補助資格時，可撥打衛福部1957福利諮詢專線（每日08:00～22:00），由專人依家庭狀況協助確認可申請項目。</p>
+      <p>不確定自己家庭符合哪些補助資格時，可撥打衛福部1957福利諮詢專線（每日08:00～22:00），由專人依家庭狀況協助確認可申請項目，全國通用、市話手機皆可撥打。</p>
     </div>
   </section>
 
@@ -597,25 +123,10 @@
 
   <section id="directory">
     <div class="section-head">
-      <h2 class="section-title">官方網站與聯絡窗口彙整</h2>
+      <h2 class="section-title">中央機關官方網站彙整</h2>
     </div>
+    <p class="section-lede">各縣市的官方網站與聯絡窗口已經放進上方選單裡你所選的縣市卡片中，這裡只列全國通用的中央機關。</p>
     <div class="dir-grid">
-      <div class="dir-card">
-        <div class="dir-cat" style="color:var(--c-ntpc)">新北市</div>
-        <h4>新北市政府福利補助自己查</h4>
-        <ul>
-          <li><a href="https://welfare.ntpc.gov.tw/" target="_blank" rel="noopener">welfare.ntpc.gov.tw</a></li>
-          <li><a href="https://baby.ntpc.gov.tw" target="_blank" rel="noopener">生育獎勵金線上申辦</a></li>
-        </ul>
-      </div>
-      <div class="dir-card">
-        <div class="dir-cat" style="color:var(--c-ntpc)">新北市</div>
-        <h4>新北市政府社會局 / 衛生局</h4>
-        <ul>
-          <li><a href="https://www.sw.ntpc.gov.tw/" target="_blank" rel="noopener">社會局官網</a></li>
-          <li class="phone">福利諮詢專線 (02)2960-3456</li>
-        </ul>
-      </div>
       <div class="dir-card">
         <div class="dir-cat" style="color:var(--c-central)">中央政府</div>
         <h4>勞動部勞工保險局</h4>
@@ -648,30 +159,299 @@
           <li><a href="https://www.ntbt.gov.tw/" target="_blank" rel="noopener">財政部臺北國稅局</a></li>
         </ul>
       </div>
-      <div class="dir-card">
-        <div class="dir-cat" style="color:var(--c-taipei)">台北市</div>
-        <h4>助您好孕（單一窗口）</h4>
-        <ul>
-          <li><a href="https://born.taipei/" target="_blank" rel="noopener">born.taipei 官方網站</a></li>
-          <li class="phone">市民當家熱線 1999</li>
-        </ul>
-      </div>
-      <div class="dir-card">
-        <div class="dir-cat" style="color:var(--c-taipei)">台北市</div>
-        <h4>台北市政府社會局 / 衛生局</h4>
-        <ul>
-          <li><a href="https://dosw.gov.taipei/" target="_blank" rel="noopener">社會局官網</a></li>
-          <li><a href="https://health.gov.taipei/" target="_blank" rel="noopener">衛生局官網（兒童醫療補助）</a></li>
-        </ul>
-      </div>
     </div>
   </section>
 
   <footer>
-    <p>本文件為2026年8月25日彙整之公開資訊整理，以新北市與中央政府「不排富、確定會撥款」的項目為主軸並按時間排序，台北市對應版本與有條件／尚未上路項目移至後段，僅供參考。實際金額、資格條件與申請期限請以各機關最新公告為準，重大決策建議另洽戶籍地公所或撥打1957福利諮詢專線確認個人適用情形。</p>
-    <p>資料來源：勞動部勞工保險局、衛生福利部社會及家庭署、財政部、新北市政府民政局／社會局／衛生局（福利補助自己查）、台北市政府民政局／社會局／衛生局（助您好孕）及相關新聞媒體報導。</p>
+    <p>本文件為2026年8月25日彙整之公開資訊整理，中央政府部分為全國統一標準，縣市加碼部分已盡量交叉比對各縣市政府官方法規資料庫、政府新聞稿與媒體報導，但地方自治條例常隨政策調整，正式申請前請務必以戶籍所在地戶政事務所、社會局／處公告或電話洽詢為準，本文件不具法律效力。</p>
+    <p>資料來源：勞動部勞工保險局、衛生福利部社會及家庭署、財政部，以及基隆市、台北市、新北市、桃園市、新竹市、新竹縣、苗栗縣、台中市、彰化縣、南投縣、雲林縣、嘉義市、嘉義縣、台南市、高雄市、屏東縣、台東縣、花蓮縣、宜蘭縣、澎湖縣、金門縣、連江縣各縣市政府官網、法規資料庫及相關新聞媒體報導。</p>
   </footer>
 
 </div>
+
+<script>
+  var COUNTIES = [
+    {
+      key:"keelung", name:"基隆市",
+      table:[["每胎（不分胎次）","3萬元"]],
+      residency:"父或母一方，自出生日起前10個月連續設籍基隆市（可併計台北市、新北市、桃園市），申請時仍設籍基隆市",
+      deadline:"出生次日起60日內（有正當理由經核准可延長至1年）",
+      docs:"申請人身分證明、印章（或簽名）、新生兒母親金融帳戶存摺影本；委託辦理另加委託書及受託人身分證",
+      method:"臨櫃：辦理出生登記/初設戶籍之基隆市任一戶政事務所（七堵、安樂、中正）；核准後約10個工作天匯款，無線上申辦通道",
+      topup:"查無明確地方月加碼，比照中央標準。低收入戶另有產婦營養補助5,000元、嬰兒營養補助5,000元（限定資格，非普遍加碼）。",
+      note:"生育獎勵金於114年5月起由2萬元調升為3萬元，屬近期調整項目，建議留意後續是否再變動。",
+      links:[["基隆市生育獎勵金說明","https://www.klcg.gov.tw/tw/civil/2210-300799.html"],["基隆市戶政科","https://civil.klcg.gov.tw"]]
+    },
+    {
+      key:"taipei", name:"台北市",
+      table:[["第1胎","4萬元"],["第2胎","4.5萬元"],["第3胎（含）以上","5萬元"]],
+      residency:"父或母一方，自出生日（或預產期）前10個月起連續設籍台北市（可併計新北、基隆設籍時間），申請時仍設籍台北市",
+      deadline:"國內出生：出生次日起60日內；國外出生：1年內",
+      docs:"申請人身分證明、印章（或簽名）、新生兒母親金融機構存摺影本；委託辦理另加委託書及受託人身分證明",
+      method:"臨櫃：臺北市各區戶政事務所，辦出生登記時一併申辦",
+      topup:"托育補助台北市加碼：準公共托育每月加碼5,000元（第二胎再加2,000元）；社區公共托育家園加碼4,000元／月；公立托嬰中心加碼2,500元／月。另有普及式「臺北市兒童醫療補助」第一類：設籍台北市未滿6歲、父或母設籍並實際居住滿10個月之一般兒童即可申請，不限低收/中低收。",
+      note:"",
+      links:[["台北市助您好孕官網","https://born.taipei/"],["台北市社會局","https://dosw.gov.taipei/"]]
+    },
+    {
+      key:"ntpc", name:"新北市",
+      table:[["第1胎（115年出生）","4萬元"],["第2胎","4.5萬元"],["第3胎（含）以上","5萬元"]],
+      residency:"母或父設籍新北市滿10個月（可併計基北北桃），或出生後累計設籍滿10個月；未婚生育、依法收養者亦適用",
+      deadline:"出生後1年內",
+      docs:"親自辦理：國民身分證、存摺影本；委託辦理：另加受託人身分證、委託書",
+      method:"臨櫃：各戶政事務所辦出生登記時一併申辦；線上：baby.ntpc.gov.tw",
+      topup:"送托準公共合作保母加發2,000元／月；送托私立托嬰中心（含準公共）加發3,000元／月，疊加在中央托育補助之上。新北市兒童醫療補助則限低收入戶、中低收入戶、罕見疾病或重大傷病兒童，非一般家庭皆可領。",
+      note:"",
+      links:[["新北市線上申辦","https://baby.ntpc.gov.tw"],["新北市福利補助自己查","https://welfare.ntpc.gov.tw/"]]
+    },
+    {
+      key:"taoyuan", name:"桃園市",
+      table:[["第1胎","3萬元"],["第2胎","4萬元"],["第3胎（含）以上","5萬元（每胎，多胞胎每名再+1萬）"]],
+      residency:"申請時設籍桃園市，且符合：出生前已連續設籍滿1年；或113年後出生、設籍滿10個月且遷入前設籍北北基；或114年後出生、出生前已設籍且出生後連續設籍合計滿1年",
+      deadline:"符合前兩款者：出生後6個月內；第三款者：設籍合計滿1年後2個月內",
+      docs:"申請表（法定代理人簽章）、申請人身分證、印章、金融機構存摺封面影本；委託辦理另加委託書及受託人身分證",
+      method:"線上：桃園網路e指通；臨櫃：各區戶政事務所或區公所社會課",
+      topup:"送托準公共居家保母加碼1,000元／月、準公共托嬰中心加碼2,000元／月（第2名子女再加1,000元、第3名以上再加2,000元）；自帶育兒者查無月加碼（原2-4歲加碼已於110年7月終止）。",
+      note:"",
+      links:[["桃園網路e指通","https://e-services.tycg.gov.tw"],["桃園市社會局兒少福利科","https://dowcd.tycg.gov.tw"]]
+    },
+    {
+      key:"hsinchu-city", name:"新竹市",
+      table:[["單胎","3萬元"],["雙胞胎","6萬元"],["三胞胎以上或二次以上雙胞胎","10萬元"],["死產（滿20週）","1.5萬元"]],
+      residency:"父母一方自新生兒出生日起前1年至申請時，連續設籍新竹市未遷出",
+      deadline:"出生後6個月內（正當理由可延至1年內）",
+      docs:"申請人身分證、印章、郵政儲金簿或金融機構存摺封面影本",
+      method:"臨櫃：辦理出生登記或初設戶籍之戶政事務所",
+      topup:"0-6歲自帶育兒津貼加碼（2026年3月起，免申請直接入帳）：第1胎+1,000元＝6,000元/月、第2胎+1,000元＝7,000元/月、第3胎以上+1,000元＝8,000元/月；送托者另有加碼：準公共托嬰中心/保母+1,500元/月、公共托嬰中心+500元/月。",
+      note:"自帶加碼與送托加碼分屬不同管道，一般僅能擇一情境適用，建議申請前致電新竹市社會處（03-535-2386）確認排富與互斥規定。",
+      links:[["新竹市育兒津貼加碼平台","https://ilovehcbaby.hccg.gov.tw/"],["新竹市社會處","https://society.hccg.gov.tw"]]
+    },
+    {
+      key:"hsinchu-county", name:"新竹縣",
+      table:[["第1胎","1萬元"],["第2胎","2萬元"],["第3胎（含）以上","5萬元"],["雙胞胎","3萬元"],["三胞胎以上","10萬元"]],
+      residency:"新生兒父母一方設籍並繼續居住新竹縣滿1年以上（自出生日回溯計算，中途不得遷出）",
+      deadline:"出生登記（或初設戶籍）後1個月內，逾期視為放棄、不得補件",
+      docs:"新生兒出生證明或戶口名簿、申請人身分證、印章、金融機構存摺封面影本",
+      method:"臨櫃：新生兒戶籍所在地之戶政事務所，辦出生登記時一併申請",
+      topup:"查無縣府層級月加碼，比照中央標準。部分鄉鎮市另有加碼（例如竹北市1萬、湖口鄉2萬、北埔鄉/橫山鄉3萬、寶山鄉第3胎5萬），需另洽鄉鎮市公所。",
+      note:"縣府申請期限僅出生登記後1個月，是全台最短期限之一，務必優先處理避免逾期。",
+      links:[["新竹縣社會處","https://social.hsinchu.gov.tw"],["新竹縣民政處","https://civil.hsinchu.gov.tw"]]
+    },
+    {
+      key:"miaoli", name:"苗栗縣",
+      table:[["每名新生兒（不分胎次）","2萬元"],["死產或流產（滿20週）","1萬元"]],
+      residency:"父母一方於新生兒出生當日已設籍苗栗縣滿6個月以上，申請時仍設籍本縣",
+      deadline:"出生日起6個月內（國外出生或正當理由可延至幼兒滿2歲）",
+      docs:"申請人身分證、印章、申請表（戶政現場提供）；委託辦理另加委託書",
+      method:"臨櫃：新生兒辦理出生登記或初設戶籍之戶政事務所",
+      topup:"查無明確地方月加碼，官網僅列出中央標準（5,000/6,000/7,000元），建議洽苗栗縣社會處兒少及家庭支持科（037-332122）確認最新政策。",
+      note:"",
+      links:[["苗栗縣政府民政處","https://www.miaoli.gov.tw"]]
+    },
+    {
+      key:"taichung", name:"台中市",
+      table:[["第1胎（115年起）","2萬元"],["第2胎","2萬元"],["第3胎","3萬元"],["第4胎（含）以上","每胎再+1萬元"]],
+      residency:"父或母一方於新生兒出生當日已設籍台中市滿180天以上，申請時仍設籍本市",
+      deadline:"出生日起6個月內",
+      docs:"申請人身分證、印章",
+      method:"臨櫃：新生兒設籍地戶政事務所",
+      topup:"「未滿3歲兒童托育公共化及準公共服務」依子女排行加碼：第2名子女每月再加發1,000元、第3名（含）以上每月再加發2,000元，適用一般/中低收/低收各類家庭。另有較舊資料提及0-2歲準公共加碼6,000元、2-6歲加碼3,000元等項目，是否在中央大幅調升托育補助後仍同步疊加，建議洽台中市社會局兒少福利科（04-2228-9111）確認最新狀況。",
+      note:"",
+      links:[["台中市社會局公告","https://www.society.taichung.gov.tw"],["台中市服務e櫃檯","https://eservices.taichung.gov.tw/"]]
+    },
+    {
+      key:"changhua", name:"彰化縣",
+      table:[["第1胎（115年起）","3萬元"],["第2胎","5萬元"],["第3胎（含）以上","8萬元"]],
+      residency:"新生兒完成出生登記並設籍彰化縣（申請時仍設籍）；或父母一方自出生前1年至申請時連續設籍彰化縣未中斷",
+      deadline:"國內出生：出生日起3個月內；國外出生：6個月內",
+      docs:"生育補助申請表、已辦出生登記之戶口名簿（含詳細記事頁）、郵局帳戶封面影本；委託辦理另加委託書及委託人身分證",
+      method:"臨櫃：彰化縣任一戶政事務所，審核通過當日以現金發放",
+      topup:"查無縣府層級月加碼，育兒津貼與中央標準一致。部分鄉鎮市公所另有自辦生育獎勵措施（約5千至1萬元不等），需另洽鄉鎮市公所。",
+      note:"",
+      links:[["彰化縣社會處生育補助申辦","https://www.chcg.gov.tw"],["彰化縣育兒資源網","https://dearbaby.chcg.gov.tw/"]]
+    },
+    {
+      key:"nantou", name:"南投縣",
+      table:[["第1胎","1萬元"],["第2胎","1.5萬元"],["第3胎","2萬元"],["第4胎","5萬元"],["第5胎（含）以上","10萬元"]],
+      residency:"新生兒須60日內完成出生登記；父或母一方設籍並連續居住南投縣10個月以上",
+      deadline:"出生後60日內提出申請，逾期視為放棄（全台最短期限之一，需特別留意）",
+      docs:"申請人身分證、印章；委託辦理另加委託書；線上申辦需存摺影本",
+      method:"臨櫃：新生兒設籍地戶政事務所；亦有線上申辦管道（核准後10日內匯款）",
+      topup:"查無縣府層級月加碼。部分鄉鎮市另行自辦較高額生育獎勵及1-5歲兒童生日禮金等長期加碼，需另洽戶籍所在地鄉鎮市公所確認。",
+      note:"",
+      links:[["南投縣政府公告","https://www.nantou.gov.tw"],["南投育兒資源網","https://ntbaby.nantou.gov.tw/"]]
+    },
+    {
+      key:"yunlin", name:"雲林縣",
+      table:[["第1胎（115年起）","3萬元"],["第2胎","3萬元"],["第3胎（含）以上","10萬元"]],
+      residency:"父或母一方設籍並實際居住雲林縣滿8個月以上（中途遷出需重新起算）",
+      deadline:"出生後6個月內",
+      docs:"國民身分證及印章、生育津貼申請書及領據（戶政現場填寫）；委託辦理另加委託書、受託人身分證及印章",
+      method:"臨櫃：雲林縣轄下各戶政事務所，通常於辦理出生登記時一併申辦",
+      topup:"查無縣府層級月加碼，比照中央標準。部分鄉鎮公所（如麥寮鄉、西螺鎮、台西鄉等）另有加碼，需另洽鄉鎮公所。",
+      note:"此制度近3年內已修改多次金額與設籍門檻（2023年底、2024年7月、2026年1月各有調整），變動頻繁，務必以最新公告為準。",
+      links:[["雲林縣社會處","https://social.yunlin.gov.tw/"],["雲林縣法規資料庫","https://law.yunlin.gov.tw/LawContent.aspx?id=GL000080"]]
+    },
+    {
+      key:"chiayi-city", name:"嘉義市",
+      table:[["每名新生兒（不分胎次）","3萬元"]],
+      residency:"父或母設籍嘉義市滿6個月以上，中途未遷出（自出生日往前推算）",
+      deadline:"國內出生：出生後3個月內；國外出生：1年內",
+      docs:"申請人身分證、印章；委託辦理另加代理人身分證及印章",
+      method:"臨櫃：新生兒完成出生登記所在地之戶政事務所",
+      topup:"查無一般家庭的地方月加碼，育有未滿二歲兒童育兒津貼金額（5,000/6,000/7,000元）與中央標準完全一致。",
+      note:"",
+      links:[["嘉義市社會處生育津貼","https://social.chiayi.gov.tw"]]
+    },
+    {
+      key:"chiayi-county", name:"嘉義縣",
+      table:[["第1胎","1.2萬元"],["第2胎","2.4萬元"],["第3胎","3.6萬元"],["第4胎（含）以上","10萬元（信度中，建議洽官方確認）"]],
+      residency:"產婦或其配偶設籍嘉義縣滿6個月以上，申請時仍在籍",
+      deadline:"已辦出生登記者：出生次日起3個月內；初設戶籍或生父認領登記者：1年內",
+      docs:"新生兒出生證明書、申請人身分證、印章、金融機構存摺封面影本",
+      method:"臨櫃：嘉義縣所轄任一戶政事務所，辦出生登記時一併申請",
+      topup:"查無縣府層級月加碼，比照中央標準。部分鄉鎮市（太保市、朴子市、鹿草鄉等）另有加碼（約1-3萬元），需另洽鄉鎮市公所。",
+      note:"官方法規網站有存取限制，金額為多方交叉比對結果，建議申請前致電嘉義縣社會局確認最新金額。",
+      links:[["嘉義縣社會局","https://sabcc.cyhg.gov.tw/"]]
+    },
+    {
+      key:"tainan", name:"台南市",
+      table:[["第1、2名（依父母排序）","各2萬元"],["第3、4名","各3萬元"],["第5名以後","每名5萬元"]],
+      residency:"父或母一方連續設籍台南市滿6個月以上，申請時仍設籍台南市；新生兒完成出生登記或初設戶籍登記",
+      deadline:"出生後180日內",
+      docs:"出生登記：出生證明書正本、戶口名簿、身分證、印章或簽名；委託辦理另加委託書",
+      method:"臨櫃：台南市全市18區戶政事務所，通常與出生登記一併辦理",
+      topup:"查無地方月加碼，0-5歲育兒津貼金額與中央標準完全一致（5,000/6,000/7,000元）。",
+      note:"獎勵金依「父母所生子女排序」計算，非單指同一胎次，計算方式與其他縣市略有不同，申請前建議確認自己排第幾名。",
+      links:[["台南人口政策資源網","https://people.tainan.gov.tw"]]
+    },
+    {
+      key:"kaohsiung", name:"高雄市",
+      table:[["每名新生兒（不分胎次，112年4月起）","3萬元"]],
+      residency:"新生兒出生當日，父或母已在高雄市設籍並實際居住滿10個月",
+      deadline:"出生日起1年內（收養案6個月內）",
+      docs:"申請書、申請人身分證明、印章、郵政儲金簿或金融機構存摺封面影本；早產兒另附孕婦健康手冊及出生證明書",
+      method:"社會局受理，實務上多委託各區戶政事務所辦理出生登記時同步申辦",
+      topup:"送托準公共托嬰中心加碼約2,000～2,500元/月、準公共居家保母加碼約1,600～1,840元/月（確切數字建議洽社會局確認）；可擇一改領坐月子到宅服務時數。",
+      note:"",
+      links:[["高雄市社會局","https://socbu.kcg.gov.tw"],["高雄數位市民線上服務","https://ktc.kcg.gov.tw/"]]
+    },
+    {
+      key:"pingtung", name:"屏東縣",
+      table:[["第一胎（2025年起）","2萬元"],["第二胎（含）以上","3萬元"]],
+      residency:"父或母出生當日已設籍並實際居住屏東縣滿1年，申請時仍設籍",
+      deadline:"出生次日起6個月內",
+      docs:"申請書、身分證、印章等（確切清單建議洽戶政事務所）",
+      method:"臨櫃：戶政事務所；線上：屏東縣便民服務整合申辦平台",
+      topup:"2026年新制「未滿1歲嬰幼兒營養補助金」：每月2,000元，連續12個月，最高2.4萬元。2025年出生者須於2026年12月31日前申請、2026年起出生者須在滿1歲前申請，逾期不受理，線上申請。育兒津貼本身與中央標準一致，無另外加碼。",
+      note:"",
+      links:[["屏東縣便民服務整合申辦平台","https://onestop.pthg.gov.tw"],["屏東縣民政處生育津貼","https://www.pthg.gov.tw"]]
+    },
+    {
+      key:"taitung", name:"台東縣",
+      table:[["第一胎（113年起）","4萬元"],["第二胎","4.5萬元"],["第三胎（含）以上","5萬元"]],
+      residency:"產婦或生父持續設籍台東縣滿6個月以上",
+      deadline:"出生後60日內（正當理由可延長至1年）",
+      docs:"申請人或代理人身分證、印章、產婦姓名存摺、生育補助申請表",
+      method:"臨櫃：台東戶政事務所（台東市）、卑南辦公室、綠島辦公室、蘭嶼辦公室，無線上申辦",
+      topup:"育兒津貼與中央標準一致，無另外加碼；托育補助有多子女加碼：第2名子女+1,000元/月、第3名以上+2,000元/月。",
+      note:"",
+      links:[["台東育見幸福","https://ttbaby.taitung.gov.tw"]]
+    },
+    {
+      key:"hualien", name:"花蓮縣",
+      table:[["每名新生兒（不分胎次）","2萬元"]],
+      residency:"產婦本人或配偶一方設籍花蓮縣滿1年以上",
+      deadline:"出生後60日內（正當理由可延至1年）",
+      docs:"新生兒出生證明或戶口名簿、申請人身分證、印章、金融機構存摺封面影本",
+      method:"臨櫃：新生兒戶籍所在地戶政事務所",
+      topup:"查無家長端月加碼（保母端有加入準公共服務的每月3,000元獎勵金，是發給保母、非發給家長）。",
+      note:"花蓮縣多個鄉鎮市另有自己的生育津貼自治條例，會與縣府2萬元疊加，例如富里鄉、吉安鄉、鳳林鎮、壽豐鄉等，金額落差可達數萬元，請務必另洽戶籍所在地鄉鎮市公所確認。",
+      links:[["花蓮縣社會處","https://sa.hl.gov.tw"]]
+    },
+    {
+      key:"yilan", name:"宜蘭縣",
+      table:[["每胎（縣府層級）","2萬元 + 產檢交通費3千元"]],
+      residency:"產婦本人或配偶設籍宜蘭縣滿1年以上",
+      deadline:"出生日起3個月內",
+      docs:"身分證、印章、金融機構存摺封面影本；委託辦理另加委託書",
+      method:"臨櫃：新生兒設籍地戶政事務所",
+      topup:"縣府層級查無月加碼。宜蘭縣特別之處是全縣12鄉鎮市各自另訂生育獎勵金自治條例，會疊加在縣府補助之上，例如南澳鄉3.6萬元、頭城鎮最高5萬元、礁溪鄉依胎次2至6萬元不等，實際總額差異很大。",
+      note:"金額與期限在官方法規與部分新聞報導間略有出入（2萬 vs 1.8萬），建議致電宜蘭縣政府社會處或戶政事務所確認2026年適用金額；鄉鎮市加碼務必另洽戶籍地公所。",
+      links:[["宜蘭縣政府社會處","https://sntroot.e-land.gov.tw/"]]
+    },
+    {
+      key:"penghu", name:"澎湖縣",
+      table:[["第一胎（114年起）","4萬元"],["第二胎","6萬元"],["第三胎（含）以上","8萬元"]],
+      residency:"生父或生母連續設籍澎湖縣滿2年以上",
+      deadline:"出生後3個月內",
+      docs:"依衛生所或戶政事務所公告文件為準",
+      method:"臨櫃：衛生所或戶政事務所；線上：eservice.penghu.gov.tw",
+      topup:"「家庭安全提升補助計畫」：每月1,500元（每季撥付4,500元），累計最高3.6萬元或至滿2歲為止（以先到者為準），設籍滿1年以上即可申請，可與中央育兒津貼／托育補助同時領取，屬普發性質（非排富）。",
+      note:"",
+      links:[["澎湖縣政府","https://www.penghu.gov.tw"],["澎湖線上申辦","https://eservice.penghu.gov.tw/"]]
+    },
+    {
+      key:"kinmen", name:"金門縣",
+      table:[["單胎（生產補助2萬+加碼3萬）","5萬元"],["雙胞胎（6萬+每名加碼3萬）","12萬元"],["三胞胎以上（每名4萬+加碼3萬起）","21萬元起"]],
+      residency:"婦女生產補助：設籍滿6個月以上；支持生育加碼補助：新生兒之父或母於出生日往前推算已連續設籍滿1年以上",
+      deadline:"婦女生產補助：生產後8個月內；支持生育加碼補助：2026年1月1日至8月31日出生者60日內，9月1日以後出生者8個月內",
+      docs:"戶籍謄本、父或母金融機構存摺封面影本（需註明分行別）；委託辦理另加委託書及受託人身分證影本",
+      method:"臨櫃：戶籍所在地鄉鎮公所（兩項補助皆同）；生育贈禮於戶政事務所辦出生登記時交付",
+      topup:"另有舊制「父母照顧子女津貼」（月3,000～6,000元），但此制度是否仍對2026年新生兒家庭適用尚待確認（涉及與中央舊制銜接規定），建議洽金門縣社會處確認。",
+      note:"金門縣2026年起新增「支持生育加碼補助」，是三項生育相關給付中最新增的一項，屬近期政策變動，請留意後續是否再調整。",
+      links:[["金門縣社會處","https://social.kinmen.gov.tw/"],["金門縣網路e櫃台","https://e-service.kinmen.gov.tw/"]]
+    },
+    {
+      key:"lienchiang", name:"連江縣",
+      table:[["第一胎（114年底修正後）","3萬元"],["第二胎","6萬元"],["第三胎","9萬元"],["第四胎（含）以上","15萬元"]],
+      residency:"父或母設籍滿1年以上且累計設籍滿2年以上",
+      deadline:"生產後3個月內，逾期視同放棄",
+      docs:"申請表、出生證明書、戶籍謄本、私章",
+      method:"臨櫃：連江縣政府民政社會處",
+      topup:"舊制「家庭照顧子女津貼」（月3,000元）已於民國108年8月起停止受理新申請，對2026年出生新生兒不適用；目前查無其他月加碼措施。",
+      note:"",
+      links:[["連江縣政府","https://www.matsu.gov.tw"]]
+    }
+  ];
+
+  function esc(s){ return s==null ? "" : s; }
+
+  function renderCounty(key){
+    var c = null;
+    for (var i=0;i<COUNTIES.length;i++){ if (COUNTIES[i].key===key){ c = COUNTIES[i]; break; } }
+    var panel = document.getElementById("county-panel");
+    if (!c){ panel.innerHTML = '<div class="placeholder-card">請從上面選單選擇你的戶籍縣市，這裡會顯示對應的地方加碼補助</div>'; return; }
+
+    var rows = "";
+    for (var j=0;j<c.table.length;j++){
+      rows += "<tr><td>"+esc(c.table[j][0])+"</td><td class=\"num\">"+esc(c.table[j][1])+"</td></tr>";
+    }
+    var links = "";
+    for (var k=0;k<c.links.length;k++){
+      links += '<a href="'+c.links[k][1]+'" target="_blank" rel="noopener">'+esc(c.links[k][0])+"</a>";
+    }
+    var noteHtml = c.note ? '<div class="note">'+c.note+'</div>' : '';
+
+    panel.innerHTML =
+      '<div class="card local">' +
+        '<h3><span class="tag local">'+c.name+'</span>生育獎勵金／生育津貼</h3>' +
+        '<div class="table-wrap"><table><thead><tr><th>項目</th><th>金額</th></tr></thead><tbody>'+rows+'</tbody></table></div>' +
+        '<div class="card-grid">' +
+          '<div><div class="field-label">設籍條件</div><div class="field-value">'+c.residency+'</div></div>' +
+          '<div><div class="field-label">申請期限</div><div class="field-value">'+c.deadline+'</div></div>' +
+        '</div>' +
+        '<div class="card-grid">' +
+          '<div><div class="field-label">申請方式</div><div class="field-value">'+c.method+'</div></div>' +
+          '<div><div class="field-label">應備文件</div><div class="field-value">'+c.docs+'</div></div>' +
+        '</div>' +
+        '<p><strong style="color:var(--ink)">育兒津貼／托育補助地方加碼：</strong>'+c.topup+'</p>' +
+        noteHtml +
+        '<div class="link-row">'+links+'</div>' +
+      '</div>';
+
+    panel.scrollIntoView({behavior:"smooth", block:"nearest"});
+  }
+</script>
 </body>
 </html>
