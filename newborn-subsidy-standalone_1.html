@@ -103,8 +103,12 @@
   nav.quicknav a{
     flex:none; text-decoration:none; font-size:13px; font-weight:600; color:var(--ink-muted);
     background:var(--surface); border:1px solid var(--border); padding:7px 13px; border-radius:100px; white-space:nowrap;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+    -webkit-tap-highlight-color:transparent;
   }
   nav.quicknav a:hover{ color:var(--ink); border-color:var(--ink-faint); }
+  nav.quicknav a:active{ transform:scale(0.95); }
+  nav.quicknav a.active{ background:var(--primary); border-color:var(--primary); color:var(--surface); }
 
   /* selector hero block */
   .selector-block{
@@ -121,9 +125,12 @@
     background:var(--surface); color:var(--ink); appearance:none;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path d='M5 8l5 5 5-5' fill='none' stroke='%230F5C52' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
     background-repeat:no-repeat; background-position:right 14px center;
-    cursor:pointer;
+    cursor:pointer; transition:background-color .2s ease, transform .1s ease;
+    -webkit-tap-highlight-color:transparent;
   }
   select#county-select:focus{ outline:2px solid var(--primary); outline-offset:2px; }
+  select#county-select:active{ transform:scale(0.99); }
+  select#county-select.is-set{ background-color:var(--primary-soft); }
   .selector-hint{ margin-top:10px; font-size:12.5px; color:var(--ink-muted); }
 
   #county-panel{ margin-top:16px; scroll-margin-top:80px; }
@@ -131,6 +138,9 @@
     border:1px dashed var(--border); border-radius:10px; padding:26px 20px;
     text-align:center; color:var(--ink-faint); font-size:14px; background:var(--surface);
   }
+
+  @keyframes panelIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  #county-panel .card{ animation:panelIn .35s ease; }
 
   .summary-strip{
     display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
@@ -191,9 +201,10 @@
     margin-top:12px; font-size:13px; color:var(--ink-faint); border-top:1px dashed var(--border); padding-top:10px;
   }
   .link-row{ margin-top:14px; display:flex; flex-wrap:wrap; gap:10px 18px; }
-  .link-row a{ font-size:13.5px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:5px; }
+  .link-row a{ font-size:13.5px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:5px; -webkit-tap-highlight-color:transparent; }
   .link-row a::after{ content:"→"; transition:transform .15s; }
   .link-row a:hover::after{ transform:translateX(2px); }
+  .link-row a:active{ opacity:0.6; }
 
   .table-wrap{ overflow-x:auto; margin-top:16px; border:1px solid var(--border); border-radius:10px; position:relative; }
   table{ border-collapse:collapse; width:100%; min-width:420px; font-size:14px; background:var(--surface);}
@@ -263,29 +274,50 @@
     .rail-item::before{ left:-20px; width:11px; height:11px; }
     .rail-when{ font-size:11.5px; margin-bottom:8px; }
 
-    .card{ padding:15px 14px; border-radius:9px; }
+    .card{ padding:16px 15px; border-radius:14px; }
     .card + .card{ margin-top:11px; }
     .card h3{ font-size:16px; gap:6px; }
     .card p{ font-size:13.5px; }
     .card-grid{ grid-template-columns:1fr; gap:10px; margin-top:12px; }
     .card-grid + .card-grid{ margin-top:10px; }
 
-    .table-wrap{ margin-top:12px; border-radius:8px; -webkit-overflow-scrolling:touch; }
-    .table-wrap::before{
-      content:"左右滑動可看完整表格"; display:block; font-size:11px; color:var(--ink-faint);
-      padding:6px 12px; background:var(--surface-2); border-bottom:1px solid var(--border);
+    /* stacked, non-scrolling tables: each row reads as a small card instead of forcing sideways scroll */
+    .table-wrap{ overflow-x:visible; margin-top:12px; border-radius:12px; }
+    table{ display:block; min-width:0; width:100%; font-size:13px; }
+    thead{ display:none; }
+    tbody{ display:block; }
+    tbody tr{ display:block; padding:12px 13px; border-bottom:1px solid var(--border); }
+    tbody tr:last-child{ border:none; }
+    tbody td{ display:block; border:none; padding:2px 0; }
+    tbody td:first-child{
+      font-weight:700; font-size:14px; color:var(--ink); padding-bottom:6px;
     }
-    table{ min-width:380px; font-size:12.5px; }
-    thead th{ padding:9px 11px; font-size:11.5px; }
-    tbody td{ padding:9px 11px; }
+    tbody td:not(:first-child){
+      display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+      font-size:12.5px; padding:3px 0;
+    }
+    tbody td:not(:first-child)::before{
+      content:attr(data-label); font-size:10.5px; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace;
+      text-transform:uppercase; letter-spacing:.03em; flex:none; padding-top:1px;
+    }
+    tbody td:not(:first-child) > *{ text-align:right; }
+    td.num{ font-size:13px; }
+
+    /* simple item/amount tables (county subsidy tables): one line per row, no stacked labels */
+    table.table-simple tbody tr{
+      display:flex; justify-content:space-between; align-items:center; gap:12px; padding:11px 13px;
+    }
+    table.table-simple tbody td:first-child{ font-weight:600; font-size:13px; padding-bottom:0; }
+    table.table-simple tbody td:not(:first-child){ display:block; }
+    table.table-simple tbody td:not(:first-child)::before{ content:none; }
 
     .link-row{ gap:8px 14px; margin-top:12px; }
     .link-row a{ font-size:13px; }
 
     .dir-grid{ grid-template-columns:1fr; gap:10px; }
-    .dir-card{ padding:14px 15px; }
+    .dir-card{ padding:14px 15px; border-radius:12px; }
 
-    .callout{ padding:13px 14px; font-size:13px; }
+    .callout{ padding:13px 14px; font-size:13px; border-radius:12px; }
     footer{ margin-top:44px; font-size:12px; }
   }
 </style>
@@ -405,11 +437,11 @@
             <table>
               <thead><tr><th>身分別</th><th>資格條件</th><th>原始給付計算</th></tr></thead>
               <tbody>
-                <tr><td>勞保</td><td>生產前已加保滿280日（早產滿181日）</td><td class="num">前6個月平均月投保薪資 × 2個月</td></tr>
-                <tr><td>國民年金</td><td>保險有效期間分娩，或退保後1年內分娩</td><td class="num">月投保金額 × 2個月</td></tr>
-                <tr><td>農保</td><td>加保滿280日分娩（早產181日）</td><td class="num">當月投保金額 × 3個月</td></tr>
-                <tr><td>公教保</td><td>繳費滿280日分娩（早產181日）</td><td class="num">往前推6個月保險俸額 × 2個月</td></tr>
-                <tr><td>未參加任何社會保險</td><td>2026年1月1日後分娩之本國籍或與國人結婚之外籍女性</td><td class="num">直接領10萬元</td></tr>
+                <tr><td>勞保</td><td data-label="資格條件">生產前已加保滿280日（早產滿181日）</td><td class="num" data-label="原始給付計算">前6個月平均月投保薪資 × 2個月</td></tr>
+                <tr><td>國民年金</td><td data-label="資格條件">保險有效期間分娩，或退保後1年內分娩</td><td class="num" data-label="原始給付計算">月投保金額 × 2個月</td></tr>
+                <tr><td>農保</td><td data-label="資格條件">加保滿280日分娩（早產181日）</td><td class="num" data-label="原始給付計算">當月投保金額 × 3個月</td></tr>
+                <tr><td>公教保</td><td data-label="資格條件">繳費滿280日分娩（早產181日）</td><td class="num" data-label="原始給付計算">往前推6個月保險俸額 × 2個月</td></tr>
+                <tr><td>未參加任何社會保險</td><td data-label="資格條件">2026年1月1日後分娩之本國籍或與國人結婚之外籍女性</td><td class="num" data-label="原始給付計算">直接領10萬元</td></tr>
               </tbody>
             </table>
           </div>
@@ -435,9 +467,9 @@
             <table>
               <thead><tr><th>一般家庭・胎次</th><th>育兒津貼（月）</th><th>公共托育（月）</th><th>準公共托育（月）</th></tr></thead>
               <tbody>
-                <tr><td>第1胎</td><td class="num">5,000</td><td class="num">7,000</td><td class="num">13,000</td></tr>
-                <tr><td>第2胎</td><td class="num">6,000</td><td class="num">8,000</td><td class="num">14,000</td></tr>
-                <tr><td>第3胎以上</td><td class="num">7,000</td><td class="num">9,000</td><td class="num">15,000</td></tr>
+                <tr><td>第1胎</td><td class="num" data-label="育兒津貼">5,000</td><td class="num" data-label="公共托育">7,000</td><td class="num" data-label="準公共托育">13,000</td></tr>
+                <tr><td>第2胎</td><td class="num" data-label="育兒津貼">6,000</td><td class="num" data-label="公共托育">8,000</td><td class="num" data-label="準公共托育">14,000</td></tr>
+                <tr><td>第3胎以上</td><td class="num" data-label="育兒津貼">7,000</td><td class="num" data-label="公共托育">9,000</td><td class="num" data-label="準公共托育">15,000</td></tr>
               </tbody>
             </table>
           </div>
@@ -830,7 +862,9 @@
     var c = null;
     for (var i=0;i<COUNTIES.length;i++){ if (COUNTIES[i].key===key){ c = COUNTIES[i]; break; } }
     var panel = document.getElementById("county-panel");
-    if (!c){ panel.innerHTML = '<div class="placeholder-card">請從上面選單選擇你的戶籍縣市，這裡會顯示對應的地方加碼補助</div>'; return; }
+    var select = document.getElementById("county-select");
+    if (!c){ panel.innerHTML = '<div class="placeholder-card">請從上面選單選擇你的戶籍縣市，這裡會顯示對應的地方加碼補助</div>'; if (select) select.classList.remove("is-set"); return; }
+    if (select) select.classList.add("is-set");
 
     var rows = "";
     for (var j=0;j<c.table.length;j++){
@@ -845,7 +879,7 @@
     panel.innerHTML =
       '<div class="card local">' +
         '<h3><span class="tag local">'+c.name+'</span>生育獎勵金／生育津貼</h3>' +
-        '<div class="table-wrap"><table><thead><tr><th>項目</th><th>金額</th></tr></thead><tbody>'+rows+'</tbody></table></div>' +
+        '<div class="table-wrap"><table class="table-simple"><thead><tr><th>項目</th><th>金額</th></tr></thead><tbody>'+rows+'</tbody></table></div>' +
         '<div class="card-grid">' +
           '<div><div class="field-label">設籍條件</div><div class="field-value">'+c.residency+'</div></div>' +
           '<div><div class="field-label">申請期限</div><div class="field-value">'+c.deadline+'</div></div>' +
@@ -861,6 +895,37 @@
 
     panel.scrollIntoView({behavior:"smooth", block:"nearest"});
   }
+
+  // scroll-spy: highlight the current section's pill in the sticky nav
+  (function(){
+    var navLinks = {};
+    var navEls = document.querySelectorAll("nav.quicknav a");
+    for (var i=0;i<navEls.length;i++){
+      var href = navEls[i].getAttribute("href");
+      if (href && href.charAt(0)==="#") navLinks[href.slice(1)] = navEls[i];
+    }
+    if (!("IntersectionObserver" in window)) return;
+    var observer = new IntersectionObserver(function(entries){
+      for (var j=0;j<entries.length;j++){
+        if (entries[j].isIntersecting){
+          for (var id in navLinks){ if (navLinks.hasOwnProperty(id)) navLinks[id].classList.remove("active"); }
+          var link = navLinks[entries[j].target.id];
+          if (link){
+            link.classList.add("active");
+            if (typeof link.scrollIntoView === "function"){
+              link.scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"});
+            }
+          }
+        }
+      }
+    }, {rootMargin:"-45% 0px -50% 0px", threshold:0});
+    for (var id2 in navLinks){
+      if (navLinks.hasOwnProperty(id2)){
+        var section = document.getElementById(id2);
+        if (section) observer.observe(section);
+      }
+    }
+  })();
 </script>
 </body>
 </html>
