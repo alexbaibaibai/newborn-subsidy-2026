@@ -78,14 +78,11 @@
   }
 
   .watermark{
-    position:fixed; top:14px; right:16px; z-index:30; pointer-events:none;
-    display:flex; align-items:center; gap:7px;
-    padding:7px 14px 7px 12px; border-radius:100px;
-    background:color-mix(in srgb, var(--surface) 85%, transparent);
-    backdrop-filter:blur(6px);
-    border:1px solid var(--border); box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center; gap:7px;
+    padding:10px 16px; text-align:center;
+    background:var(--surface-2); border-bottom:1px solid var(--border);
     font-family:"Noto Sans TC",sans-serif; font-size:12.5px; font-weight:600;
-    color:var(--ink-muted); line-height:1.3; white-space:nowrap;
+    color:var(--ink-muted); line-height:1.3;
   }
   .watermark .dot{width:6px; height:6px; border-radius:50%; background:var(--primary); flex:none;}
   .watermark strong{ color:var(--primary); font-weight:700; }
@@ -243,10 +240,7 @@
   hr.div{ border:none; border-top:1px solid var(--border); margin:52px 0 0; }
 
   @media (max-width:640px){
-    .watermark{
-      top:8px; right:8px; padding:5px 10px 5px 9px; font-size:10.5px; gap:5px;
-      max-width:58vw; white-space:normal; text-align:right; line-height:1.35;
-    }
+    .watermark{ padding:8px 14px; font-size:11px; gap:6px; }
     .watermark .dot{ width:5px; height:5px; }
     header.hero{ padding:32px 16px 18px; }
     .subtitle{ font-size:14.5px; }
